@@ -50,7 +50,7 @@ Binaries/*
 Build/*
 
 # Content
-Content/*
+#Content/*
 
 # Don't ignore icon files in Build
 !Build/**/*.ico
