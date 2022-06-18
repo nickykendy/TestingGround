@@ -1,2 +1,5 @@
-*.uasset filter=lfs diff=lfs merge=lfs -text
-*.umap filter=lfs diff=lfs merge=lfs -text
+Content/Geometry/** filter=lfs diff=lfs merge=lfs -text
+Content/Maps/** filter=lfs diff=lfs merge=lfs -text
+Content/NPC/** filter=lfs diff=lfs merge=lfs -text
+Content/Player/** filter=lfs diff=lfs merge=lfs -text
+Content/Weapon/** filter=lfs diff=lfs merge=lfs -text
