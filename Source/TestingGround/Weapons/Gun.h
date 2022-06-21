@@ -45,6 +45,7 @@ public:
 		UAnimMontage* FireAnimation;
 
 	/** Fires a projectile. */
+	UFUNCTION(BlueprintCallable, Category = Gameplay)
 	void OnFire();
 
 	void SetAnimInstance(UAnimInstance* AnimInst);
