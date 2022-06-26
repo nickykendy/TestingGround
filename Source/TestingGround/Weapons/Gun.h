@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Gun.generated.h"
 
+
 UCLASS()
 class TESTINGGROUND_API AGun : public AActor
 {
@@ -23,7 +24,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UAnimInstance* AnimInstance;
+	class UAnimInstance* AnimInstanceFP;
+	class UAnimInstance* AnimInstanceTP;
 
 public:
 	// Sets default values for this actor's properties
@@ -33,20 +35,23 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 		TSubclassOf<class AMyProjectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 		USoundBase* FireSound;
 
 	/** AnimMontage to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		UAnimMontage* FireAnimation;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	UAnimMontage* FireAnimFP;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	UAnimMontage* FireAnimTP;
 
 	/** Fires a projectile. */
-	UFUNCTION(BlueprintCallable, Category = Gameplay)
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 	void OnFire();
 
-	void SetAnimInstance(UAnimInstance* AnimInst);
+	void SetAnimInstance(bool isFP, UAnimInstance* AnimInst);
 };

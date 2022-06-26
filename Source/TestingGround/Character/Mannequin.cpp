@@ -38,8 +38,20 @@ void AMannequin::BeginPlay()
 		const FVector SpawnLocation = FPMesh->GetSocketLocation(FName("GripPoint"));
 		const FRotator SpawnRotation = FPMesh->GetSocketRotation(FName("GripPoint"));
 		Gun = World->SpawnActor<AGun>(GunClass, SpawnLocation, SpawnRotation);
-		Gun->AttachToComponent(FPMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("GripPoint"));
-		Gun->SetAnimInstance(FPMesh->GetAnimInstance());
+		Gun->SetAnimInstance(true, FPMesh->GetAnimInstance());
+		Gun->SetAnimInstance(false, GetMesh()->GetAnimInstance());
+		if (IsPlayerControlled())
+		{
+			Gun->AttachToComponent(FPMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("GripPoint"));
+		}
+		else
+		{
+			Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("GripPoint"));
+		}
+	}
+
+	if (InputComponent != nullptr) {
+		InputComponent->BindAction("Fire", IE_Pressed, this, &AMannequin::PullTrigger);
 	}
 }
 
@@ -55,4 +67,18 @@ void AMannequin::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMannequin::UnPossessed()
+{
+	Super::UnPossessed();
+	if (!ensure(Gun)) return;
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("GripPoint"));
+}
+
+// Fire a weapon
+void AMannequin::PullTrigger()
+{
+	if (!ensure(Gun)) return;
+	Gun->OnFire();
 }

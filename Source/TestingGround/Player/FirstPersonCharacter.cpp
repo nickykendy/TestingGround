@@ -61,7 +61,7 @@ void AFirstPersonCharacter::BeginPlay()
 			SpawnRotation
 		);
 		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("GripPoint"));
-		Gun->SetAnimInstance(Mesh1P->GetAnimInstance());
+		Gun->SetAnimInstance(true, Mesh1P->GetAnimInstance());
 	}
 }
 

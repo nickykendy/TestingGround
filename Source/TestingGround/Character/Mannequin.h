@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Mannequin.generated.h"
 
+class AGun;
 class UCameraComponent;
 class USkeletalMeshComponent;
 
@@ -40,6 +41,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Called when unpossessed
+	virtual void UnPossessed() override;
+
 	/** Gun muzzle's offset from the characters location */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FVector GunOffset;
@@ -48,7 +52,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
 	TSubclassOf<class AGun> GunClass;
 
-	/** AGun Getter */
+	/** Fire method */
 	UFUNCTION(BlueprintCallable, Category = Gameplay)
-	AGun* GetGun() { return Gun; }
+	void PullTrigger();
 };
