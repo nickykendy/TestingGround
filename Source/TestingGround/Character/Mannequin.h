@@ -45,14 +45,14 @@ public:
 	virtual void UnPossessed() override;
 
 	/** Gun muzzle's offset from the characters location */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	FVector GunOffset;
 
 	/** The Gun Class ready to spawn */
-	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	TSubclassOf<class AGun> GunClass;
 
 	/** Fire method */
-	UFUNCTION(BlueprintCallable, Category = Gameplay)
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 	void PullTrigger();
 };
