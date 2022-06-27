@@ -2,6 +2,7 @@
 
 
 #include "../Terrain/Tile.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ATile::ATile()
@@ -16,6 +17,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CastSphere(GetActorLocation() + FVector(0, 0, 0), 300.0);
 }
 
 // Called every frame
@@ -43,4 +45,36 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
 		Spawned->SetActorRelativeLocation(SpawnPoint);
 		Spawned->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 	}
+}
+
+bool ATile::CastSphere(FVector Location, float Radius)
+{
+	UWorld* const World = GetWorld();
+	if (!ensure(World)) return false;
+
+	FHitResult OutHit;
+	bool HasHit = World->SweepSingleByChannel(
+		OutHit,
+		Location,
+		Location,
+		FQuat::Identity,
+		ECollisionChannel::ECC_GameTraceChannel2, 
+		FCollisionShape::MakeSphere(Radius)
+	);
+
+	FColor ResultColor = HasHit ? FColor::Red : FColor::Green;
+	DrawDebugCapsule(
+		World, 
+		Location, 
+		Radius, 
+		Radius, 
+		FQuat::Identity, 
+		ResultColor, 
+		true, 
+		-1.f, 
+		0U, 
+		5.f
+	);
+
+	return HasHit;
 }

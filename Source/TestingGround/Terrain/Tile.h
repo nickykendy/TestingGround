@@ -15,6 +15,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	bool CastSphere(FVector Location, float Radius);
+
 public:
 	// Sets default values for this actor's properties
 	ATile();
