@@ -16,7 +16,11 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	bool CastSphere(FVector Location, float Radius);
+	bool CanSpawnAtLocation(FVector Location, float Radius);
+
+	bool FindEmptyLocation(FVector& OutLoc, float Radius);
+
+	void PlaceActorAtLocation(TSubclassOf<AActor> ToSpawn, FVector Point, float RotDegree, float Scale);
 
 public:
 	// Sets default values for this actor's properties
@@ -27,5 +31,5 @@ public:
 
 	/** place some objects */
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
-	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn);
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f, float MinScale = 1.f, float MaxScale = 1.f);
 };
