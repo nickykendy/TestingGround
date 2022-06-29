@@ -7,7 +7,7 @@
 
 void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()
 {
-	auto VolumeIterator = TActorIterator<AActor>(GetWorld());
+	auto VolumeIterator = TActorIterator<ANavMeshBoundsVolume>(GetWorld());
 	while (VolumeIterator)
 	{
 		AddToPool(*VolumeIterator);
@@ -15,7 +15,7 @@ void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()
 	}
 }
 
-void AInfiniteTerrainGameMode::AddToPool(AActor* VolumeToAdd)
+void AInfiniteTerrainGameMode::AddToPool(ANavMeshBoundsVolume* VolumeToAdd)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Found: %s"), *VolumeToAdd->GetName());
 }

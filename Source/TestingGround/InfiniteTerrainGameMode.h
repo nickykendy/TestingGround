@@ -20,6 +20,6 @@ public:
 	void PopulateBoundsVolumePool();
 
 private:
-	void AddToPool(class AActor*VolumeToAdd);
+	void AddToPool(class ANavMeshBoundsVolume *VolumeToAdd);
 
 };
