@@ -77,13 +77,16 @@ private:
 
 	void PlaceActorAtLocation(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
 
+	void PlaceActorAtLocation(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
+
 	void PlaceNavMesh();
 
 	UActorPool* Pool;
 
 	AActor* NavMeshBoundsVolume;
 
-	TArray<FSpawnPosition> GenerateSpawnPosition(FSpawnParam SpawnParam);
+	template<class T>
+	void RandomlyPlaceActors(TSubclassOf<T> ToSpawn, FSpawnParam SpawnParam);
 
 public:
 	// Sets default values for this actor's properties
@@ -92,9 +95,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	/** place some objects */
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
 	void PlaceActors(TSubclassOf<AActor> ToSpawn, FSpawnParam SpawnParam);
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn")
+	void PlaceAIPawns(TSubclassOf<APawn> ToSpawn, FSpawnParam SpawnParam);
 
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* PoolToSet);
