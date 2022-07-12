@@ -44,6 +44,7 @@ void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 
 	if (!ensure(Pool)) return;
+	if (!ensure(NavMeshBoundsVolume)) return;
 
 	Pool->Return(NavMeshBoundsVolume);
 }
@@ -101,12 +102,11 @@ void ATile::PlaceActorAtLocation(TSubclassOf<APawn> ToSpawn, FSpawnPosition Spaw
 	UWorld* const World = GetWorld();
 	if (!ensure(World)) return;
 
-	APawn* Spawned = World->SpawnActor<APawn>(ToSpawn);
+	FRotator Rotation = FRotator(0, SpawnPosition.Rotation, 0);
+	APawn* Spawned = World->SpawnActor<APawn>(ToSpawn, SpawnPosition.Location, Rotation);
 	if (!ensure(Spawned)) return;
 
-	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 	Spawned->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
-	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 	Spawned->SpawnDefaultController();
 	Spawned->Tags.Add(FName("Enemy"));
 }
